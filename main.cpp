@@ -381,6 +381,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	
 	Player player =  Player();
 	
+	int kk = 0;
+	int px = 0;
+	int py = 0;
 
 
 	Mark mark;
@@ -467,30 +470,43 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	*/
 
 		//マウスを離して飛ばす
-		/*
-		Novice::GetMousePosition(&MauseX, &MauseY);
-
 		
-
-		Novice::GetMousePosition(&ReleaseMauseX, &ReleaseMauseY);
-
-
+		
+		
+		Fall = true;
 
 		if (Novice::IsPressMouse(0))
 		{
+			Fall = false;
+		}
 
-			Fall = true;
-			if (Fall == true)
+		if (Fall == false)
+		{
+			if (Novice::IsPressMouse(0))
 			{
+				px = 0;
+				py = 0;
+			   
+				 
 				
-				player.GetWorldPosition();
-			
 
 			}
+		}
+
+		if (Fall == true)
+		{
+			px = MauseX;
+			py = MauseY;
 
 
 		}
-		*/
+	
+		
+		Novice::GetMousePosition(&MauseX, &MauseY);
+
+
+
+		Novice::GetMousePosition(&ReleaseMauseX, &ReleaseMauseY);
 
 
 
@@ -505,6 +521,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		///
 
 		
+		Novice::ScreenPrintf(0, 20, "mauseX = %d", px);
+		Novice::ScreenPrintf(0, 40, "mauseY = %d", py);
+
 
 		//if (Novice::IsPressMouse(0))
 		//{

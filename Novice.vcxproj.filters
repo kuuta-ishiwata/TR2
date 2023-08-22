@@ -38,15 +38,6 @@
     <ClCompile Include="C:\KamataEngine\DirectXGame\base\StringUtility.cpp">
       <Filter>KamataEngine\Source</Filter>
     </ClCompile>
-    <ClCompile Include="Mause.cpp">
-      <Filter>KamataEngine</Filter>
-    </ClCompile>
-    <ClCompile Include="MATH.cpp">
-      <Filter>KamataEngine</Filter>
-    </ClCompile>
-    <ClCompile Include="WorldTransform.cpp">
-      <Filter>KamataEngine</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="C:\KamataEngine\DirectXGame\audio\Audio.h">
@@ -119,18 +110,6 @@
     <ClInclude Include="C:\KamataEngine\DirectXGame\2d\ImGuiManager.h" />
     <ClInclude Include="C:\KamataEngine\DirectXGame\base\StringUtility.h">
       <Filter>KamataEngine\Include</Filter>
-    </ClInclude>
-    <ClInclude Include="player.h">
-      <Filter>KamataEngine</Filter>
-    </ClInclude>
-    <ClInclude Include="Mause.h">
-      <Filter>KamataEngine</Filter>
-    </ClInclude>
-    <ClInclude Include="MATH.h">
-      <Filter>KamataEngine</Filter>
-    </ClInclude>
-    <ClInclude Include="WorldTransform.h">
-      <Filter>KamataEngine</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
