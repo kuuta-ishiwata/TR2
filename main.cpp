@@ -6,7 +6,6 @@
 #include <assert.h>
 #include <Windows.h>
 #include <worldtransform.h>
-#include"Matrix4x4.h"
 
 
 const char kWindowTitle[] = "LE2C_02_イシワタクウタ";
@@ -29,9 +28,9 @@ Vector2 Add(const Vector2 v1, const Vector2& v2) {
 	return result;
 };
 
-Matrix4x4 Multiply(const Matrix4x4& m1, const Matrix4x4& m2) {
+Matrix3x3 Multiply(const Matrix3x3& m1, const Matrix3x3& m2) {
 
-	Matrix4x4 result;
+	Matrix3x3 result;
 
 	result.m[0][0] = m1.m[0][0] * m2.m[0][0] + m1.m[0][1] * m2.m[1][0] + m1.m[0][2] * m2.m[2][0] +
 	                 m1.m[0][3] * m2.m[3][0];
@@ -59,7 +58,7 @@ Matrix4x4 Multiply(const Matrix4x4& m1, const Matrix4x4& m2) {
 	                 m1.m[2][3] * m2.m[3][2];
 	result.m[2][3] = m1.m[2][0] * m2.m[0][3] + m1.m[2][1] * m2.m[1][3] + m1.m[2][2] * m2.m[2][3] +
 	                 m1.m[2][3] * m2.m[3][3];
-
+	/*
 	result.m[3][0] = m1.m[3][0] * m2.m[0][0] + m1.m[3][1] * m2.m[1][0] + m1.m[3][2] * m2.m[2][0] +
 	                 m1.m[3][3] * m2.m[3][0];
 	result.m[3][1] = m1.m[3][0] * m2.m[0][1] + m1.m[3][1] * m2.m[1][1] + m1.m[3][2] * m2.m[2][1] +
@@ -68,36 +67,36 @@ Matrix4x4 Multiply(const Matrix4x4& m1, const Matrix4x4& m2) {
 	                 m1.m[3][3] * m2.m[3][2];
 	result.m[3][3] = m1.m[3][0] * m2.m[0][3] + m1.m[3][1] * m2.m[1][3] + m1.m[3][2] * m2.m[2][3] +
 	                 m1.m[3][3] * m2.m[3][3];
-
+					 */
 	return result;
 }
 
-Matrix4x4 Inverse(const Matrix4x4& m) {
-	Matrix4x4 result;
-	float determinant = m.m[0][0] * m.m[1][1] * m.m[2][2] * m.m[3][3] +
-	                    m.m[0][0] * m.m[1][2] * m.m[2][3] * m.m[3][1] +
-	                    m.m[0][0] * m.m[1][3] * m.m[2][1] * m.m[3][2] -
-	                    m.m[0][0] * m.m[1][3] * m.m[2][2] * m.m[3][1] -
-	                    m.m[0][0] * m.m[1][2] * m.m[2][1] * m.m[3][3] -
-	                    m.m[0][0] * m.m[1][1] * m.m[2][3] * m.m[3][2] -
-	                    m.m[0][1] * m.m[1][0] * m.m[2][2] * m.m[3][3] -
-	                    m.m[0][2] * m.m[1][0] * m.m[2][3] * m.m[3][1] -
-	                    m.m[0][3] * m.m[1][0] * m.m[2][1] * m.m[3][2] +
-	                    m.m[0][3] * m.m[1][0] * m.m[2][2] * m.m[3][1] +
-	                    m.m[0][2] * m.m[1][0] * m.m[2][1] * m.m[3][3] +
-	                    m.m[0][1] * m.m[1][0] * m.m[2][3] * m.m[3][2] +
-	                    m.m[0][1] * m.m[1][2] * m.m[2][0] * m.m[3][3] +
-	                    m.m[0][2] * m.m[1][3] * m.m[2][0] * m.m[3][1] +
-	                    m.m[0][3] * m.m[1][1] * m.m[2][0] * m.m[3][2] -
-	                    m.m[0][3] * m.m[1][2] * m.m[2][0] * m.m[3][1] -
-	                    m.m[0][2] * m.m[1][1] * m.m[2][0] * m.m[3][3] -
-	                    m.m[0][1] * m.m[1][3] * m.m[2][0] * m.m[3][2] -
-	                    m.m[0][1] * m.m[1][2] * m.m[2][3] * m.m[3][0] -
-	                    m.m[0][2] * m.m[1][3] * m.m[2][1] * m.m[3][0] -
-	                    m.m[0][3] * m.m[1][1] * m.m[2][2] * m.m[3][0] +
-	                    m.m[0][3] * m.m[1][2] * m.m[2][1] * m.m[3][0] +
-	                    m.m[0][2] * m.m[1][1] * m.m[2][3] * m.m[3][0] +
-	                    m.m[0][1] * m.m[1][3] * m.m[2][2] * m.m[3][0];
+Matrix3x3 Inverse(const Matrix3x3& m) {
+	Matrix3x3 result;
+	float determinant = m.m[0][0] * m.m[1][1] * m.m[2][2]+
+	                    m.m[0][0] * m.m[1][2] * m.m[2][3]+
+	                    m.m[0][0] * m.m[1][3] * m.m[2][1]-
+	                    m.m[0][0] * m.m[1][3] * m.m[2][2]-
+	                    m.m[0][0] * m.m[1][2] * m.m[2][1]-
+	                    m.m[0][0] * m.m[1][1] * m.m[2][3]-
+	                    m.m[0][1] * m.m[1][0] * m.m[2][2]-
+	                    m.m[0][2] * m.m[1][0] * m.m[2][3]-
+	                    m.m[0][3] * m.m[1][0] * m.m[2][1]+
+	                    m.m[0][3] * m.m[1][0] * m.m[2][2]+
+	                    m.m[0][2] * m.m[1][0] * m.m[2][1]+
+	                    m.m[0][1] * m.m[1][0] * m.m[2][3]+
+	                    m.m[0][1] * m.m[1][2] * m.m[2][0]+
+	                    m.m[0][2] * m.m[1][3] * m.m[2][0]+
+	                    m.m[0][3] * m.m[1][1] * m.m[2][0]-
+	                    m.m[0][3] * m.m[1][2] * m.m[2][0]-
+	                    m.m[0][2] * m.m[1][1] * m.m[2][0]-
+	                    m.m[0][1] * m.m[1][3] * m.m[2][0]-
+	                    m.m[0][1] * m.m[1][2] * m.m[2][3]-
+	                    m.m[0][2] * m.m[1][3] * m.m[2][1]-
+	                    m.m[0][3] * m.m[1][1] * m.m[2][2]+
+	                    m.m[0][3] * m.m[1][2] * m.m[2][1]+
+	                    m.m[0][2] * m.m[1][1] * m.m[2][3]+
+	                    m.m[0][1] * m.m[1][3] * m.m[2][2];
 
 	float rectdeterminant = 1 / determinant;
 
@@ -164,6 +163,7 @@ Matrix4x4 Inverse(const Matrix4x4& m) {
 	                  m.m[0][1] * m.m[1][0] * m.m[2][3] + m.m[0][0] * m.m[1][3] * m.m[2][1]) *
 	                 rectdeterminant;
 
+	/*
 	// 3行列
 	result.m[3][0] = (-m.m[1][0] * m.m[2][1] * m.m[3][2] - m.m[1][1] * m.m[2][2] * m.m[3][0] -
 	                  m.m[1][2] * m.m[2][0] * m.m[3][1] + m.m[1][2] * m.m[2][1] * m.m[3][0] +
@@ -184,63 +184,58 @@ Matrix4x4 Inverse(const Matrix4x4& m) {
 	                  m.m[0][2] * m.m[1][0] * m.m[2][1] - m.m[0][2] * m.m[1][1] * m.m[2][0] -
 	                  m.m[0][1] * m.m[1][0] * m.m[2][2] - m.m[0][0] * m.m[1][2] * m.m[2][1]) *
 	                 rectdeterminant;
-
+					 */
 	return result;
 };
 
 // スケーリング行列を宣言
-Matrix4x4 matScale(const Vector3 scale) {
-	Matrix4x4 result;
+Matrix3x3 matScale(const Vector2 scale) {
+	Matrix3x3 result;
 	result.m[0][0] = scale.x;
 	result.m[1][1] = scale.y;
-	result.m[2][2] = scale.z;
-	result.m[3][3] = 1.0f;
+	//result.m[2][2] = 1.0f;
 	return result;
 }
 
-Matrix4x4 matRotX(float rotation) {
+Matrix3x3 matRotX(float rotation) {
 
-	Matrix4x4 result;
+	Matrix3x3 result;
 	result.m[0][0] = 1.0f;
 	result.m[1][1] = cos(rotation);
-	result.m[2][1] = sin(rotation);
-	result.m[1][2] = sin(rotation);
-	result.m[2][2] = cos(rotation);
-	result.m[3][3] = 1.0f;
+	//result.m[2][1] = sin(rotation);
+	//result.m[1][2] = sin(rotation);
+	//result.m[2][2] = cos(rotation);
 	return result;
 }
 
-Matrix4x4 matRotY(float rotation) {
+Matrix3x3 matRotY(float rotation) {
 
-	Matrix4x4 result;
+	Matrix3x3 result;
 	result.m[0][0] = cos(rotation);
 	result.m[1][1] = 1.0f;
-	result.m[0][2] = sin(rotation);
-	result.m[2][0] = sin(rotation);
-	result.m[2][2] = cos(rotation);
-	result.m[3][3] = 1.0f;
+	//result.m[0][2] = sin(rotation);
+	//result.m[2][0] = sin(rotation);
+	//result.m[2][2] = cos(rotation);
 	return result;
 }
-Matrix4x4 matRotZ(float rotation) {
-	Matrix4x4 result;
+Matrix3x3 matRotZ(float rotation) {
+	Matrix3x3 result;
 
 	result.m[0][0] = cos(rotation);
 	result.m[1][0] = sin(rotation);
 	result.m[0][1] = -sin(rotation);
 	result.m[1][1] = cos(rotation);
-	result.m[2][2] = 1.0f;
-	result.m[3][3] = 1.0f;
-
+	//result.m[2][2] = 1.0f;
+	
 	return result;
 }
 
-Matrix4x4 matRotXYZ(float rotationX, float rotationY, float rotationZ) {
+Matrix3x3 matRotXY(float rotationX, float rotationY) {
 
-	Matrix4x4 rotateXmAtrix = matRotX(rotationX);
-	Matrix4x4 rotateYmAtrix = matRotY(rotationY);
-	Matrix4x4 rotateZmAtrix = matRotY(rotationZ);
-
-	Matrix4x4 matrotXYZ = Multiply(Multiply(rotateZmAtrix, rotateXmAtrix), rotateYmAtrix);
+	Matrix3x3 rotateXmAtrix = matRotX(rotationX);
+	Matrix3x3 rotateYmAtrix = matRotY(rotationY);
+	
+	Matrix3x3 matrotXYZ = Multiply(rotateXmAtrix, rotateYmAtrix);
 
 	return matrotXYZ;
 }
@@ -269,25 +264,21 @@ Matrix4x4 matTrans(const Vector3 translation) {
 	return result;
 }
 
-Matrix4x4 MakeAffineMatrix(const Vector3& scale, const Vector3& rot, const Vector3& translate) {
+Matrix3x3 MakeAffineMatrix(const Vector2& scale, const Vector2& rot) {
 
-	Matrix4x4 result;
+	Matrix3x3 result;
 
-	Matrix4x4 scale_ = {0};
+	Matrix3x3 scale_ = {0};
 	scale_ = matScale(scale);
 
-	Matrix4x4 rot_;
-	rot_ = matRotXYZ(rot.x, rot.y, rot.z);
+	Matrix3x3 rot_ = { 0 };
+	rot_ = matRotXY(rot.x, rot.y);
 
-	Matrix4x4 translate_;
-	translate_ = matTrans(translate);
-
-	result = Multiply(scale_, Multiply(rot_, translate_));
 
 	return result;
 }
 
-Vector2 TransformNomal(const Vector2& v, const Matrix4x4& m) {
+Vector2 TransformNomal(const Vector2& v, const Matrix3x3& m) {
 	Vector2 result{
 	    v.x * m.m[0][0] + v.y * m.m[1][0],
 	    v.x * m.m[0][1] + v.y * m.m[1][1],
@@ -313,7 +304,7 @@ float Length(const Vector2& v) {
 }
 
 // 正規化
-Vector2 Normalize(const Vector2& v) {
+Vector2 Nomalize(const Vector2& v) {
 	Vector2 result;
 
 	result.x = v.x / Length(v);
@@ -324,15 +315,17 @@ Vector2 Normalize(const Vector2& v) {
 
 
 
+
 struct Player {
-	Vector2 position;
-	int radius;
-	int speed;
+	Vector2 position
+		= { 300,300 };
+	int radius = 32;
+	Vector2 speed;
 	Vector2 progress;
 	bool flag;
 	int timer;
-	Vector2 GetWorldPosition();
-	Vector2 WorldTransform();
+	//Vector2 GetWorldPosition();
+	//Vector2 WorldTransform();
 };
 
 struct Mark
@@ -343,7 +336,7 @@ struct Mark
 	Vector2 progress;
 	bool flag;
 	int timer;
-	Vector2 GetWorldPosition();
+	//Vector2 GetWorldPosition();
 };
 
 /*
@@ -360,17 +353,16 @@ struct ReleaseMark {
 Matrix3x3 matWorld_;
 WorldTransform worldtransform_;
 
-Vector2 Player::GetWorldPosition() {
+
+Vector2 GetWorldPosition() {
 	// ワールド座標を入れる変数
 	Vector2 worldPos;
 	// ワールド行列の平行移動成分を取得(ワールド座標)
-	worldPos.x = worldtransform_.matWorld_.m[3][0];
-	worldPos.y = worldtransform_.matWorld_.m[3][1];
+	worldPos.x = worldtransform_.matWorld_.m[2][0];
+	worldPos.y = worldtransform_.matWorld_.m[2][1];
 
 	return worldPos;
 }
-
-Vector2 GetWorldPosition();
 
 // Windowsアプリでのエントリーポイント(main関数)
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
@@ -380,7 +372,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	
 	
 	Player player =  Player();
-	
 	int kk = 0;
 	int px = 0;
 	int py = 0;
@@ -484,12 +475,32 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		{
 			if (Novice::IsPressMouse(0))
 			{
-				px = 0;
-				py = 0;
-			   
+				 px = 0;
+				 py = 0;
 				 
-				
+				 Vector2 MausePos(MauseX, MauseY);
+				 Vector2 ReleaseMausePos(ReleaseMauseX, ReleaseMauseY);
 
+				 MausePos = GetWorldPosition();
+				 ReleaseMausePos = GetWorldPosition();
+
+				 Vector2 Result =
+				 {
+					 MausePos.x - ReleaseMausePos.x,
+					 MausePos.y - ReleaseMausePos.y
+
+				 };
+				
+				 Vector2 ResultNomalize = Nomalize(Result);
+				 Vector2 PlayerVelocity =
+				 {
+					ResultNomalize.x * player.speed.x,
+					ResultNomalize.y * player.speed.y
+				 };
+
+
+				 player.position.x += PlayerVelocity.x;
+				 player.position.y += PlayerVelocity.y;
 			}
 		}
 
@@ -497,7 +508,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		{
 			px = MauseX;
 			py = MauseY;
-
+		    
+			player.position.x;
+			player.position.y;
 
 		}
 	
@@ -532,7 +545,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		//
 		//}
 	
-		
+		Novice::DrawEllipse(player.position.x, player.position.y, player.radius, player.radius, 0.0f, RED, kFillModeSolid);
 		
 
 		///
